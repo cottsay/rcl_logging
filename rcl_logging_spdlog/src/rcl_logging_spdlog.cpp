@@ -156,7 +156,10 @@ rcl_logging_ret_t rcl_logging_external_initialize(
 
 rcl_logging_ret_t rcl_logging_external_shutdown()
 {
-  g_root_logger = nullptr;
+  if (g_root_logger) {
+    g_root_logger->flush();
+  }
+  g_root_logger.reset();
   return RCL_LOGGING_RET_OK;
 }
 
